@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Welcome {{user.username}}</h1>
+
+    <h2>Create A Post</h2>
+    {% if user.is_authenticated %}
+    <div>
+        <a href="{% url 'users:logout_user' %}">Logout</a>
+    </div>
+    <br />
+    <form action="{% url 'chirpapp:create_post' %}" method="POST">
+        {% csrf_token %}
+        <span>Blog Post Title</span>
+        <input type="text" name="title" placeholder="Underwater Basket Weaving" maxlength="20"/>
+        <br />
+        <span>Blog Post Text</span>
+        <input type="text" name="text" placeholder="To weave a basket underwater, all you have to do is..." maxlength="255"/>
+        <br />
+        <button type="submit">Submit</button>
+    </form>
+    {% else %}
+    <span>You must be logged in to create a post</span>
+    <br />
+    <a href="{% url 'users:login_user' %}">Login Here</a>
+    <br />
+    <a href="{% url 'users:register' %}">Sign Up Here</a>
+    {% endif %}
+
+    <h2>All Posts</h2>
+    {% for post in posts %}
+    {% if user == post.author %}
+    <div><a href="{% url 'chirpapp:show_edit' post.id %}">Edit</a></div>
+    <div><a href="{% url 'chirpapp:delete_post' post.id %}">Delete</a></div>
+
+    {% endif %}
+    {{post.title}}
+    <br />
+    {{post.text}}
+    <br />
+    Author: {{post.author}}
+    <br />
+    Written At: {{post.created_date}}
+    <br />
+    <hr />
+    <br />
+    {% endfor %}
+</body>
+
+</html>

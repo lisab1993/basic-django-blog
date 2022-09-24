@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Edit Post</h2>
+    <form action="{% url 'chirpapp:submit_edit' post.id %}" method="POST">
+        {% csrf_token %}
+        <div>Title</div>
+        <input type="text" value={{post.title}} name="title" />
+        <br />
+        <div>Text</div>
+        <input type="text" value="{{post.text}}" name="text" />
+        <button type="submit">Submit</button>
+    </form>
+</body>
+
+</html>

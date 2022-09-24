@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Register User</h2>
+    <form action="{% url 'users:register' %}" method="POST">
+        {% csrf_token %}
+        <span>Enter Your Username</span>
+        <input type="text" name="username" placeholder="username"/>
+        <br/>
+        <span>Enter Your Password</span>
+        <input type="password" name="password1"/>
+        <br/>
+        <span>Enter Your Password Again</span>
+        <input type="password" name="password2"/>
+        <br/>
+        <button type="submit">Submit</button>
+    </form>
+    <div>Already a member? <a href="{% url 'users:login_user' %}">Login Here!</a> Or <a href="{% url 'chirpapp:index' %}">continue as a guest</a></div>
+</body>
+</html>
