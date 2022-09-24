@@ -3,12 +3,14 @@ from .models import Post
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
+
 def index(request):
     posts = Post.objects.all()
     context = {
         'posts': posts
     }
     return render(request, 'chirpapp/index.html', context)
+
 
 @login_required
 def create_post(request):
@@ -24,32 +26,23 @@ def create_post(request):
         )
         return redirect('chirpapp:index')
 
-#edit post
+#This view has two jobs: to grab the information from the post being edited, and to submit the changes.
 @login_required
-def show_edit(request, id):
+def edit_post(request, id):
     post = get_object_or_404(Post, id=id)
-    context={
-        'post':post
+    context = {
+        'post': post
     }
-    return render(request, 'chirpapp/edit.html', context)
-
-@login_required
-def submit_edit(request, id):
     if request.method == 'POST':
-        post = get_object_or_404(Post, id=id)
-        post.title = request.POST.get('title')  
+        post.title = request.POST.get('title')
         post.text = request.POST.get('text')
         post.save()
         return redirect('chirpapp:index')
+    return render(request, 'chirpapp/edit.html', context)
+
 
 @login_required
 def delete_post(request, id):
     post = get_object_or_404(Post, id=id)
     post.delete()
     return redirect('chirpapp:index')
-
-    
-
-
-
-#delete post

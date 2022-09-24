@@ -38,7 +38,7 @@
     <h2>All Posts</h2>
     {% for post in posts %}
     {% if user == post.author %}
-    <div><a href="{% url 'chirpapp:show_edit' post.id %}">Edit</a></div>
+    <div><a href="{% url 'chirpapp:edit_post' post.id %}">Edit</a></div>
     <div><a href="{% url 'chirpapp:delete_post' post.id %}">Delete</a></div>
 
     {% endif %}
