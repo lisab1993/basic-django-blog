@@ -3,14 +3,13 @@ from .models import Post
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
-
+#The homepage; gets all posts from all users
 def index(request):
     posts = Post.objects.all()
     context = {
         'posts': posts
     }
     return render(request, 'chirpapp/index.html', context)
-
 
 @login_required
 def create_post(request):
@@ -39,7 +38,6 @@ def edit_post(request, id):
         post.save()
         return redirect('chirpapp:index')
     return render(request, 'chirpapp/edit.html', context)
-
 
 @login_required
 def delete_post(request, id):
